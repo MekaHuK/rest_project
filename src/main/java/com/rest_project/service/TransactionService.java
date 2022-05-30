@@ -25,6 +25,6 @@ public interface TransactionService {
     /**
      * returns a list of transactions by status
      */
-    List<Transaction> statusFilter(String status);
+//    List<Transaction> statusFilter(String status);
 
 }
