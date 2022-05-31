@@ -42,14 +42,14 @@ public class TransactionController {
                 ? new ResponseEntity<>(transaction, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-//
-//    @GetMapping(value = "/transactions/status={status}")
-//    public ResponseEntity<List<Transaction>> read(@PathVariable(name = "status") String status) {
-//        final List<Transaction> transactions = transactionService.statusFilter(status);
-//
-//        return transactions != null && !transactions.isEmpty()
-//                ? new ResponseEntity<>(transactions, HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+
+    @GetMapping(value = "/transactions/status={status}")
+    public ResponseEntity<List<Transaction>> read(@PathVariable(name = "status") String status) {
+        final List<Transaction> transactions = transactionService.statusFilter(status);
+
+        return transactions != null && !transactions.isEmpty()
+                ? new ResponseEntity<>(transactions, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }

@@ -40,16 +40,21 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionRepository.getOne(id);
     }
 
-//    @Override
-//    public List<Transaction> statusFilter(String status){
-//        List<Transaction> result = new ArrayList<>();
-//
+    @Override
+    public List<Transaction> statusFilter(String status){
+        List<Transaction> result = new ArrayList<>();
+        List<Transaction> allTransactions = transactionRepository.findAll();
+        for(Transaction transaction : allTransactions){
+            if(transaction.getStatus().equals(status)){
+                result.add(transaction);
+            }
+        }
 //        for(Integer id : TRANSACTION_MAP.keySet()){
 //            if(TRANSACTION_MAP.get(id).getStatus().equals(status)){
 //                result.add(TRANSACTION_MAP.get(id));
 //            }
 //        }
-//        return result;
-//    }
+        return result;
+    }
 
 }
