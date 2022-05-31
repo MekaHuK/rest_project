@@ -1,8 +1,6 @@
 package com.rest_project.controller;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.rest_project.model.Transaction;
-import com.rest_project.repository.TransactionRepository;
 import com.rest_project.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,40 +48,6 @@ public class TransactionController {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Transaction with id=" + id + " is not exists");
         }
-//        final Transaction transaction = transactionService.read(id);
-//
-//        if (transaction != null && transaction.getStatus() != null) {
-//            return ResponseEntity.status(HttpStatus.OK).body("This transaction exist\n" + "transaction ID is: " + transaction.getId() +
-//                    "\n" + "transaction status is: " + transaction.getStatus());
-//        }else {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("This transaction is NOT exist");
-//        }
-
-
-
-//        try {
-//            final Transaction transaction = transactionService.read(id);
-//            if (transaction != null) {
-//                return new ResponseEntity<>(transaction, HttpStatus.OK);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Out of the try catch block");
-//            }
-//
-//        } catch (Exception e){
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Out of the try catch block");
-//        }
-//
-
-//        try{
-//            return new ResponseEntity<>(transaction, HttpStatus.OK);
-//        } catch (Exception exp){
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Transaction with that id is not exist");
-//        }
-//        return transaction != null
-//                ? new ResponseEntity<>(transaction, HttpStatus.OK)
-//                : ResponseEntity.status(HttpStatus.FORBIDDEN).body("Transaction with that id is not exist");
-//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Out of the try catch block");
-
     }
 
     @GetMapping(value = "/transactions/status={status}")
@@ -94,5 +58,4 @@ public class TransactionController {
                 ? new ResponseEntity<>(transactions, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
 }
