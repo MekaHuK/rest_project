@@ -3,9 +3,10 @@ package com.rest_project.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
-@Table(name = "test_table6")
+@Table(name = "test_table_time")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Transaction {
     @Id
@@ -20,6 +21,9 @@ public class Transaction {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name="init_time")
+    private final Instant time = Instant.now();
 
     public Integer getId(){
         return id;
@@ -44,6 +48,11 @@ public class Transaction {
     public void setStatus(String status){
         this.status = status;
     }
+
+    public Instant getTime() {
+        return time;
+    }
+
     //Experiment with Git
     //Experiment with Git2
     //Experiment with Git3
