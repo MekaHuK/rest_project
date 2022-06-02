@@ -57,4 +57,9 @@ public class TransactionServiceImpl implements TransactionService{
         return result;
     }
 
+    @Override
+    public boolean existsById(int id){
+        return transactionRepository.existsById(id);
+    }
+
 }
