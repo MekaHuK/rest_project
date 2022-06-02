@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS test_table12
+CREATE TABLE IF NOT EXISTS test_table6
 (
     id    SERIAL PRIMARY KEY ,
     content  VARCHAR(200) NOT NULL ,

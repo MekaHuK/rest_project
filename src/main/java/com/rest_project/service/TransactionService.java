@@ -27,4 +27,8 @@ public interface TransactionService {
      */
     List<Transaction> statusFilter(String status);
 
+    /**
+     * check transaction exists in database
+     */
+    boolean existsById(int id);
 }
