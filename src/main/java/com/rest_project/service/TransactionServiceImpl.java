@@ -1,6 +1,7 @@
 package com.rest_project.service;
 
 import com.rest_project.model.Transaction;
+import com.rest_project.model.Type;
 import com.rest_project.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,11 +50,6 @@ public class TransactionServiceImpl implements TransactionService{
                 result.add(transaction);
             }
         }
-//        for(Integer id : TRANSACTION_MAP.keySet()){
-//            if(TRANSACTION_MAP.get(id).getStatus().equals(status)){
-//                result.add(TRANSACTION_MAP.get(id));
-//            }
-//        }
         return result;
     }
 

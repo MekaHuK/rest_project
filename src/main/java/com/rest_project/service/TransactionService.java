@@ -31,4 +31,5 @@ public interface TransactionService {
      * check transaction exists in database
      */
     boolean existsById(int id);
+
 }
