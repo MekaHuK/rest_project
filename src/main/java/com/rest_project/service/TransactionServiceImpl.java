@@ -54,6 +54,18 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
+    public List<Transaction> complexFilter(String string){
+        List<Transaction> result = new ArrayList<>();
+        List<Transaction> allTransactions = transactionRepository.findAll();
+        for(Transaction transaction : allTransactions){
+            if(transaction.getStatus().equals(string) || transaction.getContent().equals(string)){
+                result.add(transaction);
+            }
+        }
+        return result;
+    }
+
+    @Override
     public boolean existsById(int id){
         return transactionRepository.existsById(id);
     }

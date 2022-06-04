@@ -64,13 +64,24 @@ public class TransactionController {
         }
     }
 
-    @GetMapping(value = "/transactions/status={status}")
-    public ResponseEntity<List<Transaction>> read(@PathVariable(name = "status") String status) {
+    @GetMapping(value = "/transactions/status-search/{status}")
+    public ResponseEntity<?> searchStatus(@PathVariable(name = "status") String status) {
         final List<Transaction> transactions = transactionService.statusFilter(status);
+        if(!transactions.isEmpty()){
+            return new ResponseEntity<>(transactions, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No have any transactions with status = " + status);
+        }
+    }
 
-        return transactions != null && !transactions.isEmpty()
-                ? new ResponseEntity<>(transactions, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping(value = "transactions/complex-search/{complex}")
+    public ResponseEntity<?> searchComplex(@PathVariable(name = "complex") String complex) {
+        final List<Transaction> transactions = transactionService.complexFilter(complex);
+        if(!transactions.isEmpty()){
+            return new ResponseEntity<>(transactions, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No have any transactions with status OR content = " + complex);
+        }
     }
 
 }

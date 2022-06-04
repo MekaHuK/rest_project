@@ -28,6 +28,11 @@ public interface TransactionService {
     List<Transaction> statusFilter(String status);
 
     /**
+     * returns a list of transactions by status and content
+     */
+    List<Transaction> complexFilter(String status);
+
+    /**
      * check transaction exists in database
      */
     boolean existsById(int id);
