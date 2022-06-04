@@ -32,4 +32,8 @@ public interface TransactionService {
      */
     boolean existsById(int id);
 
+    /**
+     * check database is not empty
+     */
+    boolean existsAny();
 }

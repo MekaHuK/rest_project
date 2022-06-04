@@ -38,12 +38,19 @@ public class TransactionController {
     }
 
     @GetMapping(value = "/transactions")
-    public ResponseEntity<List<Transaction>> read() {
-        final List<Transaction> transactions = transactionService.readAll();
-
-        return transactions != null && !transactions.isEmpty()
-                ? new ResponseEntity<>(transactions, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> read() {
+        boolean exists = transactionService.existsAny();
+        if(exists){
+            final List<Transaction> transactions = transactionService.readAll();
+            return new ResponseEntity<>(transactions, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have no any transactions");
+        }
+//
+//
+//        return transactions != null && !transactions.isEmpty()
+//                ? new ResponseEntity<>(transactions, HttpStatus.OK)
+//                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/transactions/{id}")

@@ -58,4 +58,9 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionRepository.existsById(id);
     }
 
+    @Override
+    public boolean existsAny(){
+        return transactionRepository.count() > 0;
+    }
+
 }
