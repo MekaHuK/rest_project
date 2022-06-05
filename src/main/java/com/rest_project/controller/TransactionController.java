@@ -1,6 +1,7 @@
 package com.rest_project.controller;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
 import com.rest_project.model.Type;
 import com.rest_project.repository.TransactionRepository;
@@ -41,8 +42,8 @@ public class TransactionController {
     public ResponseEntity<?> read() {
         boolean exists = transactionService.existsAny();
         if(exists){
-            final List<Transaction> transactions = transactionService.readAll();
-            return new ResponseEntity<>(transactions, HttpStatus.OK);
+            final List<TransactionDto> transactionsDto = transactionService.readAll();
+            return new ResponseEntity<>(transactionsDto, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have no any transactions");
         }
@@ -57,8 +58,8 @@ public class TransactionController {
     public ResponseEntity<?> read(@PathVariable(name = "id") int id) {
         boolean exists =transactionService.existsById(id);
         if (exists) {
-            final Transaction transaction = transactionService.read(id);
-            return new ResponseEntity<>(transaction, HttpStatus.OK);
+            final TransactionDto transactionDto = transactionService.read(id);
+            return new ResponseEntity<>(transactionDto, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Transaction with id=" + id + " is not exists");
         }
@@ -66,9 +67,9 @@ public class TransactionController {
 
     @GetMapping(value = "/transactions/status-search/{status}")
     public ResponseEntity<?> searchStatus(@PathVariable(name = "status") String status) {
-        final List<Transaction> transactions = transactionService.statusFilter(status);
-        if(!transactions.isEmpty()){
-            return new ResponseEntity<>(transactions, HttpStatus.OK);
+        final List<TransactionDto> transactionsDto = transactionService.statusFilter(status);
+        if(!transactionsDto.isEmpty()){
+            return new ResponseEntity<>(transactionsDto, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No have any transactions with status = " + status);
         }
@@ -76,9 +77,9 @@ public class TransactionController {
 
     @GetMapping(value = "transactions/complex-search/{complex}")
     public ResponseEntity<?> searchComplex(@PathVariable(name = "complex") String complex) {
-        final List<Transaction> transactions = transactionService.complexFilter(complex);
-        if(!transactions.isEmpty()){
-            return new ResponseEntity<>(transactions, HttpStatus.OK);
+        final List<TransactionDto> transactionsDto = transactionService.complexFilter(complex);
+        if(!transactionsDto.isEmpty()){
+            return new ResponseEntity<>(transactionsDto, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No have any transactions with status OR content = " + complex);
         }

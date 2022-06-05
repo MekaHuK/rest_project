@@ -28,7 +28,7 @@ public class Transaction {
     private String status;
 
     @Column(name="init_time")
-    private final Instant time = Instant.now();
+    private Instant time = Instant.now();
 
     @EnumType
     @Column(name="transaction_type")
