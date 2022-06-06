@@ -2,7 +2,6 @@ package com.rest_project.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.Instant;
 
 @Setter

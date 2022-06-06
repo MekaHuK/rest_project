@@ -1,8 +1,11 @@
 package com.rest_project.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
-import com.rest_project.model.Type;
 import com.rest_project.utils.MappingUtils;
 import com.rest_project.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,25 +45,36 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    public List<TransactionDto> readAll(){
+    public List<String> readAll() throws JsonProcessingException {
 //        return new ArrayList<>(TRANSACTION_MAP.values());
         List<TransactionDto> result = transactionRepository.findAll().stream()
                 .map(MappingUtils::mapToTransactionDTO)
                 .collect(Collectors.toList());
         helloUsers(result);
-        return result;
+
+        List<String> transactionsJson = new ArrayList<>();
+        for (TransactionDto dto : result){
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            objectMapper.registerModule(new JavaTimeModule());
+            transactionsJson.add(objectMapper.writeValueAsString(dto));
+        }
+        return transactionsJson;
     }
 
     @Override
-    public TransactionDto read(int id){
+    public String read(int id) throws JsonProcessingException {
 //        return TRANSACTION_MAP.get(id);
         TransactionDto result = MappingUtils.mapToTransactionDTO(transactionRepository.getOne(id));
         helloUser(result);
-        return result;
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.registerModule(new JavaTimeModule());
+        return objectMapper.writeValueAsString(result);
     }
 
     @Override
-    public List<TransactionDto> statusFilter(String status){
+    public List<String> statusFilter(String status) throws JsonProcessingException {
         List<Transaction> dtoList = new ArrayList<>();
         List<Transaction> allTransactions = transactionRepository.findAll();
         for(Transaction transaction : allTransactions){
@@ -72,11 +86,19 @@ public class TransactionServiceImpl implements TransactionService{
                 .map(MappingUtils::mapToTransactionDTO)
                 .collect(Collectors.toList());
         helloUsers(result);
-        return result;
+
+        List<String> transactionsJson = new ArrayList<>();
+        for (TransactionDto dto : result){
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            objectMapper.registerModule(new JavaTimeModule());
+            transactionsJson.add(objectMapper.writeValueAsString(dto));
+        }
+        return transactionsJson;
     }
 
     @Override
-    public List<TransactionDto> complexFilter(String string){
+    public List<String> complexFilter(String string) throws JsonProcessingException {
         List<Transaction> dtoList = new ArrayList<>();
         List<Transaction> allTransactions = transactionRepository.findAll();
         for(Transaction transaction : allTransactions){
@@ -88,7 +110,15 @@ public class TransactionServiceImpl implements TransactionService{
                 .map(MappingUtils::mapToTransactionDTO)
                 .collect(Collectors.toList());
         helloUsers(result);
-        return result;
+
+        List<String> transactionsJson = new ArrayList<>();
+        for (TransactionDto dto : result){
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            objectMapper.registerModule(new JavaTimeModule());
+            transactionsJson.add(objectMapper.writeValueAsString(dto));
+        }
+        return transactionsJson;
     }
 
     @Override
