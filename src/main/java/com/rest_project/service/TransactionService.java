@@ -1,7 +1,6 @@
 package com.rest_project.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
 
 import java.util.List;

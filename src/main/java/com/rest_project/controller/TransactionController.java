@@ -2,20 +2,12 @@ package com.rest_project.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
-import com.rest_project.model.Type;
-import com.rest_project.repository.TransactionRepository;
 import com.rest_project.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 
 import java.util.List;
@@ -36,12 +28,6 @@ public class TransactionController {
         transactionService.create(transaction);
         return ResponseEntity.status(HttpStatus.CREATED).body("Transaction successfully created with id: " + transaction.getId());
 
-//        if (transaction.getContent().length() >= 10) {
-//            transactionService.create(transaction);
-//            return ResponseEntity.status(HttpStatus.CREATED).body("Transaction successfully created with id: " + transaction.getId());
-//        } else {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Not created: the transaction must be longer than 10 characters");
-//        }
     }
 
     @GetMapping(value = "/transactions")
@@ -53,11 +39,6 @@ public class TransactionController {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have no any transactions");
         }
-//
-//
-//        return transactions != null && !transactions.isEmpty()
-//                ? new ResponseEntity<>(transactions, HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/transactions/{id}")

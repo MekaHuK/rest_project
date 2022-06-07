@@ -18,9 +18,6 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionServiceImpl implements TransactionService{
 
-//    //Transaction storage
-//    private static final Map<Integer, Transaction> TRANSACTION_MAP = new HashMap<>();
-
     @Autowired
     private TransactionRepository transactionRepository;
 
@@ -33,20 +30,14 @@ public class TransactionServiceImpl implements TransactionService{
     public void helloUser(TransactionDto transactionDto){
         transactionDto.setGreetingsMessage(greetingsMessage);
     }
-//    //Variable for transaction id generation
-//    private static final AtomicInteger TRANSACTION_ID_HOLDER = new AtomicInteger();
 
     @Override
     public void create(Transaction transaction){
-//        final int transactionId = TRANSACTION_ID_HOLDER.incrementAndGet();
-//        transaction.setId(transactionId);
-//        TRANSACTION_MAP.put(transactionId, transaction);
         transactionRepository.save(transaction);
     }
 
     @Override
     public List<String> readAll() throws JsonProcessingException {
-//        return new ArrayList<>(TRANSACTION_MAP.values());
         List<TransactionDto> result = transactionRepository.findAll().stream()
                 .map(MappingUtils::mapToTransactionDTO)
                 .collect(Collectors.toList());
@@ -64,7 +55,7 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public String read(int id) throws JsonProcessingException {
-//        return TRANSACTION_MAP.get(id);
+
         TransactionDto result = MappingUtils.mapToTransactionDTO(transactionRepository.getOne(id));
         helloUser(result);
         ObjectMapper objectMapper = new ObjectMapper();
