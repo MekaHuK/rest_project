@@ -24,8 +24,10 @@ public class TransactionServiceImpl implements TransactionService{
     private final String greetingsMessage = "Hello userName!";
 
     @Override
-    public void create(Transaction transaction){
+    public int create(TransactionDto transactionDto){
+        Transaction transaction = MappingUtils.mapToTransaction(transactionDto);
         transactionRepository.save(transaction);
+        return transaction.getId();
     }
 
     @Override

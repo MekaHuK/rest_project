@@ -2,14 +2,17 @@ package com.rest_project.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
 import com.rest_project.service.TransactionService;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,11 +25,19 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping(value = "/transactions")
-    public ResponseEntity<?> create(@RequestBody Transaction transaction) {
+//    @PostMapping(value = "/transactions")
+//    public ResponseEntity<?> create(@RequestBody TransactionDto transactionDto) {
+//        int currentTransactionId = transactionService.create(transactionDto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body("Transaction successfully created with id: " + currentTransactionId);
+//
+//    }
 
-        transactionService.create(transaction);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Transaction successfully created with id: " + transaction.getId());
+    @PostMapping(value = "/transactions")
+    public JSONObject create(@RequestBody TransactionDto transactionDto) {
+        int currentTransactionId = transactionService.create(transactionDto);
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("id",currentTransactionId);
+        return jsonObj;
 
     }
 

@@ -17,7 +17,6 @@ public class Transaction {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
 
     @Size(min = 10, message = "content size too short: 10 characters min")
