@@ -23,14 +23,6 @@ public class TransactionServiceImpl implements TransactionService{
 
     private final String greetingsMessage = "Hello userName!";
 
-    public void helloUsers(List<TransactionDto> list){
-        list.forEach(transactionDto -> transactionDto.setGreetingsMessage(greetingsMessage));
-    }
-
-    public void helloUser(TransactionDto transactionDto){
-        transactionDto.setGreetingsMessage(greetingsMessage);
-    }
-
     @Override
     public void create(Transaction transaction){
         transactionRepository.save(transaction);
@@ -41,7 +33,6 @@ public class TransactionServiceImpl implements TransactionService{
         List<TransactionDto> result = transactionRepository.findAll().stream()
                 .map(MappingUtils::mapToTransactionDTO)
                 .collect(Collectors.toList());
-        helloUsers(result);
 
         List<String> transactionsJson = new ArrayList<>();
         for (TransactionDto dto : result){
@@ -57,7 +48,6 @@ public class TransactionServiceImpl implements TransactionService{
     public String read(int id) throws JsonProcessingException {
 
         TransactionDto result = MappingUtils.mapToTransactionDTO(transactionRepository.getOne(id));
-        helloUser(result);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.registerModule(new JavaTimeModule());
@@ -76,7 +66,6 @@ public class TransactionServiceImpl implements TransactionService{
         List<TransactionDto> result = dtoList.stream()
                 .map(MappingUtils::mapToTransactionDTO)
                 .collect(Collectors.toList());
-        helloUsers(result);
 
         List<String> transactionsJson = new ArrayList<>();
         for (TransactionDto dto : result){
@@ -100,7 +89,6 @@ public class TransactionServiceImpl implements TransactionService{
         List<TransactionDto> result = dtoList.stream()
                 .map(MappingUtils::mapToTransactionDTO)
                 .collect(Collectors.toList());
-        helloUsers(result);
 
         List<String> transactionsJson = new ArrayList<>();
         for (TransactionDto dto : result){

@@ -7,10 +7,9 @@ import java.time.Instant;
 @Setter
 @Getter
 public class TransactionDto {
-    Integer id;
-    String content;
-    String status;
-    Instant time;
-    String enumType;
-    String greetingsMessage;
+    private Integer id;
+    private String content;
+    private String status;
+    private Instant time;
+    private String enumType;
 }
