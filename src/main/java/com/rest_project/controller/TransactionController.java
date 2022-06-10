@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +34,8 @@ public class TransactionController {
 //    }
 
     @PostMapping(value = "/transactions")
-    public JSONObject create(@RequestBody TransactionDto transactionDto) {
-        int currentTransactionId = transactionService.create(transactionDto);
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("id",currentTransactionId);
-        return jsonObj;
-
+    public JSONObject create(@Valid @RequestBody TransactionDto transactionDto) {
+        return transactionService.create(transactionDto);
     }
 
     @GetMapping(value = "/transactions")

@@ -3,6 +3,7 @@ package com.rest_project.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
+import net.minidev.json.JSONObject;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface TransactionService {
     /**
      * create new Transaction
      */
-    int create(TransactionDto transactionDto);
+    JSONObject create(TransactionDto transactionDto);
 
     /**
      * returns a list of all transactions

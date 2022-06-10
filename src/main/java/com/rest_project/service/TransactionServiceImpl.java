@@ -4,12 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.rest_project.controller.controlleradvice.Violation;
 import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
 import com.rest_project.utils.MappingUtils;
 import com.rest_project.repository.TransactionRepository;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +25,13 @@ public class TransactionServiceImpl implements TransactionService{
     @Autowired
     private TransactionRepository transactionRepository;
 
-    private final String greetingsMessage = "Hello userName!";
-
     @Override
-    public int create(TransactionDto transactionDto){
+    public JSONObject create(TransactionDto transactionDto){
         Transaction transaction = MappingUtils.mapToTransaction(transactionDto);
         transactionRepository.save(transaction);
-        return transaction.getId();
+        JSONObject transactionJson = new JSONObject();
+        transactionJson.put("id",transaction.getId());
+        return transactionJson;
     }
 
     @Override
