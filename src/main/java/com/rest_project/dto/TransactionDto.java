@@ -12,7 +12,7 @@ import java.time.Instant;
 
 public class TransactionDto {
     private Integer id;
-    @Size(min = 10, message = "content size too short: 10 characters min")
+    @Size(min = 10, message = "content size is too short: 10 characters min")
     private String content;
     private String status;
     private Instant time = Instant.now();

@@ -1,10 +1,11 @@
 package com.rest_project.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.rest_project.controller.TransactionsSuccessResponse;
 import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
 import net.minidev.json.JSONObject;
-
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,35 +14,22 @@ public interface TransactionService {
     /**
      * create new Transaction
      */
-    JSONObject create(TransactionDto transactionDto);
+    JSONObject createTransaction(TransactionDto transactionDto);
 
     /**
      * returns a list of all transactions
      */
-    List<String> readAll() throws JsonProcessingException;
+    TransactionsSuccessResponse readAllTransactions() throws JsonProcessingException;
 
     /**
      * returns transaction by id
      */
-    String read(int id) throws JsonProcessingException;
+    TransactionDto readOneTransaction(int id) throws JsonProcessingException;
 
     /**
-     * returns a list of transactions by status
+     * returns a list of all transactions
      */
-    List<String> statusFilter(String status) throws JsonProcessingException;
+    TransactionsSuccessResponse searchByParams(HashMap<String, String> requestParams);
 
-    /**
-     * returns a list of transactions by status and content
-     */
-    List<String> complexFilter(String status) throws JsonProcessingException;
-
-    /**
-     * check transaction exists in database
-     */
-    boolean existsById(int id);
-
-    /**
-     * check database is not empty
-     */
-    boolean existsAny();
+    public boolean existsById(int id);
 }

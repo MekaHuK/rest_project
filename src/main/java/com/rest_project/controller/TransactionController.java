@@ -3,7 +3,6 @@ package com.rest_project.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rest_project.dto.TransactionDto;
-import com.rest_project.model.Transaction;
 import com.rest_project.service.TransactionService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+@RequestMapping(value = "/transactions")
 @RestController
 public class TransactionController {
 
@@ -26,58 +27,23 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-//    @PostMapping(value = "/transactions")
-//    public ResponseEntity<?> create(@RequestBody TransactionDto transactionDto) {
-//        int currentTransactionId = transactionService.create(transactionDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Transaction successfully created with id: " + currentTransactionId);
-//
-//    }
-
-    @PostMapping(value = "/transactions")
-    public JSONObject create(@Valid @RequestBody TransactionDto transactionDto) {
-        return transactionService.create(transactionDto);
+    @PostMapping
+    public JSONObject createTransaction(@Valid @RequestBody TransactionDto transactionDto) {
+        return transactionService.createTransaction(transactionDto);
     }
 
-    @GetMapping(value = "/transactions")
-    public ResponseEntity<?> read() throws JsonProcessingException {
-        boolean exists = transactionService.existsAny();
-        if(exists){
-            final List<String> transactionsJson = transactionService.readAll();
-            return new ResponseEntity<>(transactionsJson, HttpStatus.OK);
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You have no any transactions");
-        }
+    @GetMapping
+    public TransactionsSuccessResponse getAllTransactions() throws JsonProcessingException {
+        return transactionService.readAllTransactions();
     }
 
-    @GetMapping(value = "/transactions/{id}")
-    public ResponseEntity<?> read(@PathVariable(name = "id") int id) throws JsonProcessingException {
-        boolean exists =transactionService.existsById(id);
-        if (exists) {
-            final String transactionJson = transactionService.read(id);
-
-            return new ResponseEntity<>(transactionJson, HttpStatus.OK);
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Transaction with id=" + id + " is not exists");
-        }
+    @GetMapping(value = "/{id}")
+    public TransactionDto getOneById(@PathVariable(name = "id") int id) throws JsonProcessingException {
+        return transactionService.readOneTransaction(id);
     }
 
-    @GetMapping(value = "/transactions/status-search/{status}")
-    public ResponseEntity<?> searchStatus(@PathVariable(name = "status") String status) throws JsonProcessingException {
-        final List<String> transactionsJson = transactionService.statusFilter(status);
-        if(!transactionsJson.isEmpty()){
-            return new ResponseEntity<>(transactionsJson, HttpStatus.OK);
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No have any transactions with status = " + status);
-        }
-    }
-
-    @GetMapping(value = "transactions/complex-search/{complex}")
-    public ResponseEntity<?> searchComplex(@PathVariable(name = "complex") String complex) throws JsonProcessingException {
-        final List<String> transactionsJson = transactionService.complexFilter(complex);
-        if(!transactionsJson.isEmpty()){
-            return new ResponseEntity<>(transactionsJson, HttpStatus.OK);
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No have any transactions with status OR content = " + complex);
-        }
+    @RequestMapping (value = "/search", method = RequestMethod.POST)
+    public TransactionsSuccessResponse getTransactionsByParams(@RequestParam HashMap<String, String> requestParams) {
+        return  transactionService.searchByParams(requestParams);
     }
 }
