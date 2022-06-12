@@ -24,7 +24,7 @@ public class MappingUtils {
     /**
      * from dto to entity
      */
-    public Transaction mapToTransaction(TransactionDto dto){
+    public static Transaction mapToTransaction(TransactionDto dto){
         Transaction transaction = new Transaction();
         transaction.setId(dto.getId());
         transaction.setContent(dto.getContent());

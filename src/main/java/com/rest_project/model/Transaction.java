@@ -17,10 +17,8 @@ public class Transaction {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
 
-    @Size(min = 10, message = "content size too short: 10 characters min")
     @Column(name = "content")
     private String content;
 
@@ -30,7 +28,6 @@ public class Transaction {
     @Column(name="init_time")
     private Instant time = Instant.now();
 
-    @EnumType
     @Column(name="transaction_type")
     private String enumType;
 
