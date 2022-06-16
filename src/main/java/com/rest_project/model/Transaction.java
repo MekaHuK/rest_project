@@ -31,8 +31,8 @@ public class Transaction {
     @Column(name="transaction_type")
     private String enumType;
 
-    public void setType(String type){
-            this.enumType = type;
-    }
+//    public void setType(String type){
+//            this.enumType = type;
+//    }
 
 }

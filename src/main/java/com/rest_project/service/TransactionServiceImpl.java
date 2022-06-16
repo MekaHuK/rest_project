@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rest_project.controller.TransactionsSuccessResponse;
 import com.rest_project.dto.TransactionDto;
 import com.rest_project.model.Transaction;
-import com.rest_project.utils.MappingUtils;
 import com.rest_project.repository.TransactionRepository;
+import com.rest_project.utils.TransactionMapper;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -22,7 +22,7 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public JSONObject createTransaction(TransactionDto transactionDto){
-        Transaction transaction = MappingUtils.mapToTransaction(transactionDto);
+        Transaction transaction = TransactionMapper.INSTANCE.toTransaction(transactionDto);
         transactionRepository.save(transaction);
         JSONObject transactionJson = new JSONObject();
         transactionJson.put("id",transaction.getId());
@@ -33,7 +33,7 @@ public class TransactionServiceImpl implements TransactionService{
     public TransactionsSuccessResponse readAllTransactions() throws JsonProcessingException {
         TransactionsSuccessResponse response = new TransactionsSuccessResponse();
             for(Transaction transaction : transactionRepository.findAll()){
-                response.getTransactions().add(MappingUtils.mapToTransactionDTO(transaction));
+                response.getTransactions().add(TransactionMapper.INSTANCE.toTransactionDto(transaction));
             }
         return response;
     }
@@ -54,7 +54,7 @@ public class TransactionServiceImpl implements TransactionService{
         }
 
         for(Transaction transaction : transactions){
-            response.getTransactions().add(MappingUtils.mapToTransactionDTO(transaction));
+            response.getTransactions().add(TransactionMapper.INSTANCE.toTransactionDto(transaction));
         }
         return response;
     }
@@ -64,8 +64,7 @@ public class TransactionServiceImpl implements TransactionService{
         if(!transactionRepository.existsById(id)){
             throw new ResourceNotFoundException();
         }
-        return MappingUtils.mapToTransactionDTO(transactionRepository.getOne(id));
-
+        return TransactionMapper.INSTANCE.toTransactionDto(transactionRepository.getReferenceById(id));
     }
 
     @Override
