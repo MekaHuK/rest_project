@@ -62,7 +62,7 @@ public class TransactionServiceImpl implements TransactionService{
     @Override
     public TransactionDto readOneTransaction(int id) throws JsonProcessingException {
         if(!transactionRepository.existsById(id)){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Transaction with requested id is not exist");
         }
         return TransactionMapper.INSTANCE.toTransactionDto(transactionRepository.getReferenceById(id));
     }

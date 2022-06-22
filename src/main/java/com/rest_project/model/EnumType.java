@@ -14,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = EnumTypeValidator.class)
 @Documented
 public @interface EnumType {
-    String message() default "{Type is invalid}";
+    String message() default "field Type is incorrect: use valid values";
 
     Class<?>[] groups() default { };
 
